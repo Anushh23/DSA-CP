@@ -1,0 +1,64 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        if(s.size()==0||s.size()==1) return s;
+        int i,j,n=s.size();
+        string ans="";
+        ans+=s[0];
+        int mx=1;
+        int cnt=0;
+        string pp="";
+        char c;
+        for(i=0;i<n;i++)
+        {
+            cnt=0;
+            c=s[i];
+            int k1=i-1,k2=i+1;
+            cnt++;
+            pp="";
+            while(k1>=0&&k2<n)
+            {
+                if(s[k1]==s[k2]){cnt+=2;}
+                else{break;}
+                pp+=s[k1];
+                k1--;k2++;
+            }
+            reverse(pp.begin(),pp.end());
+            string pp1=pp;
+            reverse(pp1.begin(),pp1.end());
+            pp+=c;
+            pp+=pp1;
+            if(pp.size()>mx)
+            {
+                mx=pp.size();
+                ans=pp;
+            }
+        }
+        for(i=0;i<n-1;i++)
+        {
+            c=s[i];
+            if(s[i]!=s[i+1]) continue;
+            cnt=2;
+            int k1=i-1,k2=i+2;
+            string pp="";
+            while(k1>=0&&k2<n)
+            {
+                if(s[k1]==s[k2]){cnt+=2;}
+                else{break;}
+                pp+=s[k1];
+                k1--;k2++;
+            }
+            reverse(pp.begin(),pp.end());
+            string pp1=pp;
+            reverse(pp1.begin(),pp1.end());
+            pp+=s[i];pp+=s[i];
+            pp+=pp1;
+            if(pp.size()>mx)
+            {
+                mx=pp.size();
+                ans=pp;
+            }
+        }
+        return ans;
+    }
+};

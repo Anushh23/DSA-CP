@@ -1,0 +1,78 @@
+//O(N*2) Approach- faster than 100% solutions
+class Solution {
+public:
+    int countSubstrings(string s) {
+        int n= s.size(),i,j,numOfPalindromes=0;
+        for(i=0;i<n;i++)
+        {
+            numOfPalindromes++;
+            int prev=i-1,next=i+1;
+            while(prev>=0&&next<n)
+            {
+                if(s[prev]==s[next])
+                {
+                    prev--;
+                    next++;
+                    numOfPalindromes++;
+                }
+                else{
+                    break;
+                }
+            }
+        }
+        for(i=0;i<n-1;i++)
+        {
+            if(s[i]!=s[i+1]) continue;
+            
+            numOfPalindromes++;
+            int prev=i-1,next=i+2;
+            while(prev>=0&&next<n)
+            {
+                if(s[prev]==s[next])
+                {
+                    prev--;
+                    next++;
+                    numOfPalindromes++;
+                }
+                else{
+                    break;
+                }
+            }
+        }
+        
+        return numOfPalindromes;
+    }
+};
+
+//O(N*3) Approach - Faster than 10.15% Solutions
+
+class Solution {
+public:
+    int countSubstrings(string s) {
+        string k="";
+        int i,n=s.size(),j;
+        int number_of_substrings=0;
+        for(i=0;i<n;i++)
+        {
+            char c=s[i];
+            string temp="";
+            for(j=i;j<n;j++)
+            {
+                temp+=s[j];
+                if(s[j]==c)
+                {
+                    int flag=0;
+                    for(int itr= 0;itr<temp.size()/2;itr++)
+                    {
+                        if(temp[itr]!=temp[temp.size()-1-itr])
+                        {
+                            flag=1;break;
+                        }
+                    }
+                    if(flag==0){number_of_substrings++;}
+                }
+            }
+        }
+        return number_of_substrings;
+    }
+};
