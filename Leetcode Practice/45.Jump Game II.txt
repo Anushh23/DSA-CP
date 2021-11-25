@@ -1,0 +1,51 @@
+class Solution {
+public:
+//O(n^2) Worst case complexity
+    int jump(vector<int>& nums) {
+        set<pair<int,int>>s;
+        int i,n=nums.size();
+        vector<int>dp(n,INT_MAX);
+        dp[0]=0;
+        s.insert({nums[0],0});
+        if(n==1) return 0;
+        if(nums[0]>=n-1) return 1;
+        
+        for(i=1;i<n;i++)
+        {
+            auto it= s.lower_bound({i,-1});
+            for(;it!=s.end();it++)
+            {
+                int p1=(*it).second;
+                dp[i]=min(dp[i],dp[p1]+1);
+            }
+            s.insert({nums[i]+i,i});
+        }
+        
+        return dp[n-1];
+    }
+};
+
+//O(N) Solution
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int n=nums.size(),i;
+        if(n==1) return 0;
+        int mx=nums[0],curr=nums[0],jump=0;
+        for(i=1;i<=min(n-1,mx);i++)
+        {
+            curr=max(curr,nums[i]+i);
+            if(i==n-1)
+            {
+                jump++;
+                return jump;
+            }
+            if(i==mx)
+            {
+                jump++;
+                mx=curr;
+            }
+        }
+        return 0;
+    }
+};

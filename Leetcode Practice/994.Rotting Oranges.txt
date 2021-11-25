@@ -1,0 +1,62 @@
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        int i,j,n=grid.size(),m=grid[0].size();
+        int cnt=0,pp=0,cnt2=0;
+        queue<pair<int,int>>q;
+        map<pair<int,int>,vector<pair<int,int>>>mp;
+        map<pair<int,int>,int>mpp;
+        for(i=0;i<n;i++)
+        {
+            for(j=0;j<m;j++)
+            {
+               if(grid[i][j]==2)
+               {
+                   q.push({i,j});
+                   cnt2++;
+                   mpp[{i,j}]++;
+               }
+               if(grid[i][j]!=0)
+               {
+                   cnt++;
+                   if(i-1>=0&&grid[i-1][j]!=0){mp[{i,j}].push_back({i-1,j});}
+                     if(i+1<n&&grid[i+1][j]!=0){mp[{i,j}].push_back({i+1,j});}
+                     if(j-1>=0&&grid[i][j-1]!=0){mp[{i,j}].push_back({i,j-1});}
+                     if(j+1<m&&grid[i][j+1]!=0){mp[{i,j}].push_back({i,j+1});}
+               }
+            }
+        }
+        int cnt3=0;
+        //cout<<q.size()<<" ";
+        if(cnt==0) return 0;
+        while(!q.empty())
+        {
+            int a1=q.front().first,a2=q.front().second;
+            q.pop();
+            cnt2--;
+            cnt--;
+            //cout<<a1<<" "<<a2<<"|";
+            for(auto u: mp[{a1,a2}])
+            {
+                if(mpp.find({u.first,u.second})==mpp.end())
+                {
+                    q.push({u.first,u.second});
+                    mpp[{u.first,u.second}]++;
+                    cnt3++;
+                }
+            }
+            if(cnt2==0)
+            {
+                pp+=1;
+                cnt2=cnt3;
+                cnt3=0;
+            }
+        }
+        if(cnt>0) return -1;
+        pp--;
+        return pp;
+        
+        
+        
+    }
+};
