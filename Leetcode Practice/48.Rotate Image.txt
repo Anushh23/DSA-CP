@@ -1,0 +1,47 @@
+//Solution-1 O(N^2) But not the most efficient
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        int i,j,n=matrix.size();
+        map<pair<int,int>,int>mp;
+        for(i=0;i<n;i++)
+        {
+            for(j=0;j<n;j++)
+            {
+                if(mp.find({i,j})!=mp.end()) continue;
+                int temp=matrix[i][j],p1=i,p2=j,cnt=0;
+                while(cnt<4)
+                {
+                    int a1=p2,a2=n-1-p1;
+                    mp[{p1,p2}]++;
+                    int tempp= matrix[a1][a2];
+                    matrix[a1][a2]=temp;
+                    temp=tempp;
+                    p1=a1;p2=a2;
+                    cnt++;
+                }
+                
+            }
+        }
+        
+    }
+};
+
+//Without map
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        int i,j,n=matrix.size();
+        for(i=0;i<n;i++)
+        {
+            for(j=0;j<i;j++)
+            {                
+                swap(matrix[i][j],matrix[j][i]);
+            }
+        }
+        for(i=0;i<n;i++)
+        {
+            reverse(matrix[i].begin(),matrix[i].end());
+        }
+    }
+};
