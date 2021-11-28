@@ -1,0 +1,57 @@
+//Brute force Using maps- 184ms(faster than 28%)
+class Solution {
+public:
+    int getKth(int lo, int hi, int k) {
+        int i,j;
+        vector<pair<int,int>>v;
+        vector<int>s;
+        map<int,int>mp;
+        for(i=lo;i<=hi;i++)
+        {
+            int a1=i,ans=0;
+            while(a1!=1)
+            {
+                s.push_back(a1);
+                if(mp.find(a1)!=mp.end())
+                {
+                    ans+=mp[a1];break;
+                }
+                if(a1%2==0){a1/=2;}
+                else{a1=a1*3+1;}
+                ans++;
+            }
+            v.push_back({ans,i});
+            for(j=0;j<s.size();j++)
+            {
+                mp[s[j]]=ans;
+                ans--;
+            }
+            s.clear();            
+        }
+        sort(v.begin(),v.end());
+        int pp= v[k-1].second;
+        return pp;
+    }
+};
+//Brute force without using maps - 24ms(faster than 82.79%)
+class Solution {
+public:
+    int getKth(int lo, int hi, int k) {
+        int i,j;
+        vector<pair<int,int>>v;
+        for(i=lo;i<=hi;i++)
+        {
+            int a1=i,ans=0;
+            while(a1!=1)
+            {
+                if(a1%2==0){a1/=2;}
+                else{a1=a1*3+1;}
+                ans++;
+            }
+            v.push_back({ans,i});            
+        }
+        sort(v.begin(),v.end());
+        int pp= v[k-1].second;
+        return pp;
+    }
+};
