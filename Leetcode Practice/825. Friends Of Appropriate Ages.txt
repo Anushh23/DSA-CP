@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int numFriendRequests(vector<int>& ages) {
+        //age of the second one should be less or equal
+        //age[y]<= 0.5*age[x]+7
+        int cnt=0,temp=0;
+        sort(ages.begin(),ages.end());
+        for(int i=0;i<ages.size();i++)
+        {
+            if(i!=0&&ages[i]==ages[i-1]){cnt+=temp;continue;}
+            int pp= lower_bound(ages.begin()+i+1,ages.end(),2*(ages[i]-7))-ages.begin();
+            cnt+=(pp-i-1);
+            temp=pp-i-1;
+        }
+        return cnt;
+    }
+};

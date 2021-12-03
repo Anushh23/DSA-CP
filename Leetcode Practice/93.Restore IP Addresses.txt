@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<string>v;
+    void generateString(string s,int n,int index)
+    {
+        if(n==4)
+        {
+
+            if(s[0]=='.'||s[s.size()-1]=='.'){return;}
+            for(int i=0;i<s.size();i++)
+           {
+            string k="";
+            while(i<s.size()&&s[i]!='.')
+            {
+                if(s[i]<48||s[i]>57){return;}
+                k+=s[i];i++;
+            }
+            if(k.size()==0||k.size()>3){return;}
+            int pp= stoi(k);
+            if(pp!=0&&k[0]=='0'){return;}
+            else if(pp>255||pp<0){return;}
+            else if(pp==0&&k.size()>1){return;}
+           }
+         v.push_back(s);
+        }
+        string k=s;
+        for(int i=index+1;i<s.size();i++)
+        {
+            k=s;
+            k.insert(i,".");
+            generateString(k,n+1,i+1);
+        }
+    }
+    vector<string> restoreIpAddresses(string s) {
+        
+        generateString(s,1,0);
+        return v;
+    }
+};

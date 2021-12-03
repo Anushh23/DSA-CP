@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
+        multiset<int>s;
+        for(auto u:nums1)
+        {
+            s.insert(u);
+        }
+        vector<int>v;
+        for(auto u:nums2)
+        {
+            auto pp= s.upper_bound(u);
+            if(pp==s.end())
+            {
+                auto pp1= s.begin();
+                v.push_back(*pp1);
+                s.erase(pp1);
+            }
+            else
+            {
+                v.push_back(*pp);
+                s.erase(pp);
+            }
+        }
+        return v;
+    }
+};

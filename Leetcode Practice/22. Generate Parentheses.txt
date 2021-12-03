@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<string>v;
+    void GenerateParentheses(string s,int index,int n)
+    {
+        if(index==2*n)
+        {
+            v.push_back(s);return;
+        }
+        int cnt=0,cnt1=0;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]=='('){cnt++;}
+        }
+        cnt1=s.size()-cnt;
+        if(cnt1<cnt)
+        {
+            string k=s;
+            k+=')';
+            GenerateParentheses(k,index+1,n);
+        }
+        if(cnt<n)
+        {
+            string k=s;
+            k+='(';
+            GenerateParentheses(k,index+1,n);
+        }
+    }
+    vector<string> generateParenthesis(int n) {
+        if(n==1)
+        {
+            return {"()"};
+        }
+        string s="(";
+        GenerateParentheses(s,1,n);
+        return v;
+    }
+};

@@ -1,0 +1,20 @@
+class Solution {
+public:
+    string largestNumber(vector<int>& nums) {
+        sort(nums.begin(), nums.end(), [&](int a, int b) {
+            string str_a = to_string(a);
+            string str_b = to_string(b);
+            return str_a + str_b > str_b + str_a;
+        });
+        string ans="";
+        int cnt=0;
+        for(auto u:nums)
+        {
+            if(u==0&&cnt==0){continue;}
+            ans+=to_string(u);
+            cnt++;
+        }
+        if(ans.size()==0) ans="0";
+        return ans;
+    }
+};
