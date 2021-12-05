@@ -1,0 +1,49 @@
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int sum=0,cnt=0;
+        for(auto u: nums)
+        {
+            sum+=u;
+            if(u==0){cnt++;}
+        }
+        if((sum-target)%2!=0){return false;}
+        if(sum==target&&cnt==0){return 1;}
+        int s=(sum-target)/2,n=nums.size();
+        if(s<0){return 0;}
+        if(s==0)
+        {
+            s=sum-s;
+        }
+        cout<<s<<" ";
+        //We have to find the number of ways such that sum of elements is equal to s!
+        vector<vector<int>>dp(n,vector<int>(s+1,0));
+        for(int i=0;i<n;i++)
+        {
+            if(nums[i]<=s)
+            {
+                dp[i][nums[i]]=1;
+            }
+        }
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<=s;j++)
+            {
+                if(i!=0)
+                {
+                    dp[i][j]+=dp[i-1][j];
+                    if(j-nums[i]>=0)
+                    {
+                        dp[i][j]+=dp[i-1][j-nums[i]];
+                    }
+                }
+            }
+        }
+        if(cnt==n)
+        {
+            return dp[n-1][s]+1;
+        }
+        return dp[n-1][s];
+        
+    }
+};

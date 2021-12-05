@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        map<char,int>mp;
+        int l=0,mxx=0;
+        for(int i=0;i<s.size();i++)
+        {
+            mp[s[i]]++;
+            int mx=0,sum=0;
+            for(auto u: mp)
+            {
+                mx=max(mx,u.second);
+                sum+=u.second;
+            }
+            sum-=mx;
+            if(sum<=k)
+            {
+                mxx=max(mxx,sum+mx);
+            }
+            else if(sum>k)
+            {
+               mp[s[i-(sum+mx)+1]]--;
+            }
+        }
+        return mxx;
+    }
+};
