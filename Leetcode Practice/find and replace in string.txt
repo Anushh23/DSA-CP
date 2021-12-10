@@ -1,0 +1,41 @@
+class Solution {
+public:
+    string findReplaceString(string s, vector<int>& indices, vector<string>& sources, vector<string>& targets)     {
+        map<pair<int,int>,string>mp;
+        map<int,int>mpp;
+        for(int i=0;i<sources.size();i++)
+        {
+            int p1=sources[i].size();
+            if(indices[i]+p1-1>=s.size()){continue;}
+            string k1= s.substr(indices[i],p1);
+            if(k1==sources[i])
+            {
+                mp[{indices[i],indices[i]+p1-1}]=targets[i];
+                for(int j=indices[i];j<=indices[i]+p1-1;j++)
+                {
+                    mpp[j]++;
+                }
+            }
+        }
+        int k1=0;
+        string ans="";
+        for(int i=0;i<s.size();i++)
+        {
+            if(mpp.find(i)==mpp.end()){ans+=s[i];}
+            else
+            {
+                for(auto u:mp)
+                {
+                    if(u.first.first==i)
+                    {
+                        ans+=u.second;
+                        i=u.first.second;
+                        break;
+                    }
+                }
+            }
+        }
+        return ans;
+        
+    }
+};

@@ -1,0 +1,65 @@
+//Using lower bound and set
+class Solution {
+public:
+    bool canReach(string s, int minJump, int maxJump) {
+        if(s[s.size()-1]=='1'){return false;}
+        set<int>v;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]=='0'&&i!=0){v.insert(i);}
+        }
+        queue<int>q;
+        q.push(0);
+        while(!q.empty())
+        {
+            int p1=q.front();
+            q.pop();
+            if(p1==s.size()-1){return true;}
+            auto a1=v.lower_bound(p1+minJump);
+            while(a1!=v.end())
+            {
+                int pp=*(a1);
+                if(p1+maxJump<pp){break;}
+                if(p1+minJump>pp){a1++;continue;}
+                q.push(pp);
+                v.erase(pp);
+                a1++;
+            }
+            
+        } 
+        return false;
+    }
+};
+
+//Sliding window approach-better one
+class Solution {
+public:
+    bool canReach(string s, int minJump, int maxJump) {
+       int i=0;
+        queue<int>q;
+        q.push(0);
+        int n=s.size();
+        while(i<n)
+        {
+            if(q.empty()){return false;}
+            int temp=q.front();
+            if(temp==n-1){return true;}
+            if(i>=temp+maxJump)
+            {
+                q.pop();
+            }
+            if(i>=temp+minJump&&i<=min(temp+maxJump,n-1)&&s[i]=='0')
+            {
+                q.push(i);
+            }
+            i++;
+            
+        }
+        while(!q.empty())
+        {
+            if(q.front()==n-1){return true;}
+            q.pop();
+        }
+        return false;
+    }
+};

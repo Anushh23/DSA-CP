@@ -1,0 +1,21 @@
+class Solution {
+public:
+    map<int,int>mp;
+    bool canReach(vector<int>& arr, int start) {
+       queue<int>q;
+       q.push(start); 
+       while(!q.empty())
+       {
+           int pp=q.front();
+           q.pop();
+           if(arr[pp]==0){return true;}
+           if(arr[pp]==-1){continue;}
+           
+           if(arr[pp]+pp<arr.size()&&arr[pp]+pp>=0) {q.push(arr[pp]+pp);}
+           if(-arr[pp]+pp>=0&&-arr[pp]+pp<arr.size()) {q.push(pp-arr[pp]);}
+           arr[pp]=-1;
+       }
+       return false; 
+        
+    }
+};
